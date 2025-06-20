@@ -1,0 +1,13 @@
+com\mycompany\objetosdistribuidos\ImpSincronizacion.class
+com\mycompany\objetosdistribuidos\ImpAutenticacion.class
+com\mycompany\objetosdistribuidos\ITransacciones.class
+com\mycompany\objetosdistribuidos\ServidorSaldo.class
+com\mycompany\objetosdistribuidos\IAutenticacion.class
+com\mycompany\objetosdistribuidos\ImpSaldo.class
+com\mycompany\objetosdistribuidos\ImpTransacciones.class
+com\mycompany\objetosdistribuidos\ISincronizacion.class
+com\mycompany\objetosdistribuidos\ServidorAutenticacion.class
+com\mycompany\objetosdistribuidos\Cliente.class
+com\mycompany\objetosdistribuidos\ServidorTransacciones.class
+com\mycompany\objetosdistribuidos\ServidorSincronizacion.class
+com\mycompany\objetosdistribuidos\ISaldo.class
