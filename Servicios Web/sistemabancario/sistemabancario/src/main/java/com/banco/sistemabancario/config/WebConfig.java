@@ -15,13 +15,16 @@ public class WebConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins(
-                            "http://localhost:8000",   
-                            "https://storage.googleapis.com/servicioswebfront"
+                            "http://localhost:8000",                          // Desarrollo local
+                            "https://tu-app.frontend.gcp.run.app",           // Cloud Run frontend (si lo usas)
+                            "https://tu-dominio.web.app",                    // Firebase (si lo usas)
+                            "https://storage.googleapis.com"                 // GCS bucket (frontend actual)
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(true); // Opcional si usas cookies o auth
+                        .allowCredentials(true);
             }
         };
     }
 }
+
