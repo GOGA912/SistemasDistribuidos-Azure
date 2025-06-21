@@ -15,9 +15,8 @@ public class WebConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins(
-                            "http://localhost:8000",                      // Desarrollo local
-                            "https://tu-dominio.web.app",                // Si usas Firebase Hosting
-                            "https://tu-app.frontend.gcp.run.app"        // Front desplegado en Cloud Run u otro servicio
+                            "http://localhost:8000",   
+                            "https://storage.googleapis.com/servicioswebfront"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
