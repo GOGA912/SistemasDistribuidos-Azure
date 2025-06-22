@@ -7,7 +7,8 @@ public class TransactionService {
     public static void main(String[] args) {
         try {
             // Puerto del microservicio de transacciones
-            HttpServer server = HttpServer.create(new InetSocketAddress(8083), 0);
+            int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
+            HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
             // Asociar rutas a su manejador
             server.createContext("/deposito", new OperacionHandler("deposito"));
@@ -17,7 +18,7 @@ public class TransactionService {
             server.setExecutor(null); // Executor por defecto
             server.start();
 
-            System.out.println("TransactionService iniciado en http://localhost:8083");
+            System.out.println("TransactionService iniciado en http://localhost:"+port);
 
         } catch (Exception e) {
             System.out.println("Error al iniciar TransactionService: " + e.getMessage());
