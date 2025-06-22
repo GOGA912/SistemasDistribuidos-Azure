@@ -8,6 +8,6 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:21-jdk
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
-COPY basedatos.db basedatos.db
+COPY Banco.db Banco.db
 EXPOSE 8081 8082 8083 8084
 ENTRYPOINT ["java", "-jar", "app.jar"]
