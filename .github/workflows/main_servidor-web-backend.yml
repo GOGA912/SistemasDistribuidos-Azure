@@ -26,7 +26,7 @@ jobs:
         working-directory: "Servicios Web/sistemabancario/sistemabancario"
 
       - name: Rename JAR to app.jar
-        run: mv Servicios\ Web/sistemabancario/sistemabancario/target/sistemabancario-0.0.1-SNAPSHOT.jar app.jar
+        run: mv "Servicios Web/sistemabancario/sistemabancario/target/sistemabancario-0.0.1-SNAPSHOT.jar" "app.jar"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -63,4 +63,4 @@ jobs:
         with:
           app-name: 'servidor-web-backend'
           slot-name: 'Production'
-          package: '*.jar'
+          package: 'app.jar'
