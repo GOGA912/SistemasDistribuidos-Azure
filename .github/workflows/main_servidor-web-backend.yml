@@ -25,11 +25,14 @@ jobs:
         run: mvn clean install
         working-directory: "Servicios Web/sistemabancario/sistemabancario"
 
+      - name: Rename JAR to app.jar
+        run: mv Servicios\ Web/sistemabancario/sistemabancario/target/sistemabancario-0.0.1-SNAPSHOT.jar app.jar
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: "Servicios Web/sistemabancario/sistemabancario/target/*"
+          path: app.jar
 
   deploy:
     runs-on: ubuntu-latest
@@ -60,4 +63,4 @@ jobs:
         with:
           app-name: 'servidor-web-backend'
           slot-name: 'Production'
-          package: 'sistemabancario-0.0.1-SNAPSHOT.jar'
+          package: app.jar
