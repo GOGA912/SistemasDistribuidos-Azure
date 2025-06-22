@@ -25,9 +25,6 @@ jobs:
         run: mvn clean install
         working-directory: "Servicios Web/sistemabancario/sistemabancario"
 
-      - name: Copy web.config to target folder
-        run: cp 'Servicios Web/sistemabancario/sistemabancario/web.config' 'Servicios Web/sistemabancario/sistemabancario/target/'
-
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
