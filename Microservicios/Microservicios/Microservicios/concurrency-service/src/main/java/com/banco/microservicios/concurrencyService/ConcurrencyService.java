@@ -20,7 +20,7 @@ public class ConcurrencyService {
             System.out.println("ConcurrencyService iniciado en http://localhost:"+port);
 
         } catch (Exception e) {
-            System.out.println("Error al iniciar ConcurrencyService: " + e.getMessage());
+            e.printStackTrace(); // O usa Logger si prefieres
         }
     }
 }
