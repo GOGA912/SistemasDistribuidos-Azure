@@ -48,7 +48,7 @@
       <configuration>
         <archive>
           <manifest>
-            <mainClass>com.banco.microservicios.accountService.AccountService</mainClass>
+            <mainClass>com.banco.microservicios.concurrencyService.ConcurrencyService</mainClass>
           </manifest>
         </archive>
         <descriptorRefs>
