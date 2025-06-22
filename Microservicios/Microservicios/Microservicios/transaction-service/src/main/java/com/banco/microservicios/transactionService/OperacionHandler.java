@@ -61,7 +61,7 @@ public class OperacionHandler implements HttpHandler {
         
         double saldoActual = consultarSaldo(dto.getCuenta());
         if (saldoActual < 0) {
-            enviarRespuesta(exchange, 404, "Cuenta no encontrada");
+            enviarRespuesta(exchange, 404, "Cuenta no encontrada en deposito");
             return;
         }
 
