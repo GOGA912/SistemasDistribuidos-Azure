@@ -3,7 +3,6 @@ package com.banco.microservicios;
 import java.sql.*;
 
 public class BaseDatos {
-    // ✅ Cambia a tu URL de PostgreSQL en GCP o local
     private static final String BD = "jdbc:postgresql://34.46.69.214:5432/banco";
     private static final String USUARIO = "postgres";
     private static final String PASSWORD = "sistemasdistribuidos";
@@ -13,7 +12,7 @@ public class BaseDatos {
     }
 
     public static boolean validarCuenta(String numero, int nip) {
-        String sql = "SELECT * FROM cuentas WHERE numero = ? AND nip = ?";
+        String sql = "SELECT * FROM \"Cuentas\" WHERE numero = ? AND nip = ?";
         try (Connection conn = conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, numero);
@@ -27,7 +26,7 @@ public class BaseDatos {
     }
 
     public static double consultarSaldo(String cuenta) {
-        String sql = "SELECT saldo FROM cuentas WHERE numero = ?";
+        String sql = "SELECT saldo FROM \"Cuentas\" WHERE numero = ?";
         try (Connection conn = conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cuenta);
@@ -44,7 +43,7 @@ public class BaseDatos {
     }
 
     public static boolean actualizarSaldo(String cuenta, double nuevoSaldo) {
-        String sql = "UPDATE cuentas SET saldo = ? WHERE numero = ?";
+        String sql = "UPDATE \"Cuentas\" SET saldo = ? WHERE numero = ?";
         try (Connection conn = conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setDouble(1, nuevoSaldo);
