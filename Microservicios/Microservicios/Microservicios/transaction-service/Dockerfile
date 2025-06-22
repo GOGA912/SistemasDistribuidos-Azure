@@ -7,7 +7,7 @@ RUN mvn clean package -DskipTests
 # Etapa 2: Runtime
 FROM eclipse-temurin:21-jdk
 WORKDIR /app
-COPY --from=build /app/target/account-service-1.0.0-jar-with-dependencies.jar app.jar
+COPY --from=build /app/target/transaction-service-1.0.0-jar-with-dependencies.jar app.jar
 
 # Puerto para Cloud Run
 EXPOSE 8080
