@@ -151,7 +151,7 @@ public class OperacionHandler implements HttpHandler {
 
     private double consultarSaldo(String cuenta) {
         try {
-            URL url = new URL("http://localhost:8082/saldo?cuenta=" + cuenta);
+            URL url = new URL("https://account-service-499721146204.us-central1.run.app/saldo?cuenta=" + cuenta);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
@@ -167,7 +167,7 @@ public class OperacionHandler implements HttpHandler {
 
     private boolean actualizarSaldo(String cuenta, double nuevoSaldo) {
         try {
-            URL url = new URL("http://localhost:8082/saldo/actualizar");
+            URL url = new URL("https://account-service-499721146204.us-central1.run.app/saldo/actualizar");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
@@ -205,7 +205,7 @@ public class OperacionHandler implements HttpHandler {
 
         try {
             for (int i = 0; i < 3; i++) {
-                URL url = new URL("http://localhost:8084/acceso");
+                URL url = new URL("https://concurrency-service-499721146204.us-central1.run.app/acceso");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
@@ -234,7 +234,7 @@ public class OperacionHandler implements HttpHandler {
         System.out.println("⚠️ LLAMANDO A liberarAcceso PARA: " + cuenta);
 
         try {
-            URL url = new URL("http://localhost:8084/liberar");
+            URL url = new URL("https://concurrency-service-499721146204.us-central1.run.app/liberar");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
