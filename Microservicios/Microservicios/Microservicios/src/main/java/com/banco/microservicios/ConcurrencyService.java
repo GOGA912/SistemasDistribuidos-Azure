@@ -7,7 +7,8 @@ public class ConcurrencyService {
     public static void main(String[] args) {
         try {
             // Crear servidor HTTP en el puerto 8084
-            HttpServer server = HttpServer.create(new InetSocketAddress(8084), 0);
+            int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
+            HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
             // Rutas
             server.createContext("/acceso", new AccesoHandler(true));
@@ -16,7 +17,7 @@ public class ConcurrencyService {
             server.setExecutor(null); // Usa el executor por defecto
             server.start();
 
-            System.out.println("ConcurrencyService iniciado en http://localhost:8084");
+            System.out.println("ConcurrencyService iniciado en http://localhost:"+port);
 
         } catch (Exception e) {
             System.out.println("Error al iniciar ConcurrencyService: " + e.getMessage());
