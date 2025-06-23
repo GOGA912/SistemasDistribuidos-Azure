@@ -1,4 +1,3 @@
-// Mostrar cuenta activa
 const cuenta = localStorage.getItem("cuentaActiva");
 if (!cuenta) {
   alert("Sesión no iniciada.");
@@ -7,19 +6,16 @@ if (!cuenta) {
   document.getElementById("cuentaActiva").textContent = "Cuenta: " + cuenta;
 }
 
-// Cerrar sesión
 function cerrarSesion() {
   localStorage.removeItem("cuentaActiva");
   window.location.href = "index.html";
 }
 
-// Ventanas modales
 const modal = document.getElementById("modal");
 const contenidoModal = document.getElementById("contenidoModal");
 const modalMensaje = document.getElementById("modalMensaje");
 const mensaje = document.getElementById("mensaje");
 
-// Abrir modal dinámico según operación
 function abrirModal(tipo) {
   let html = "";
 
@@ -53,12 +49,10 @@ function abrirModal(tipo) {
   modal.style.display = "flex";
 }
 
-// Cerrar modal
 function cerrarModal() {
   modal.style.display = "none";
 }
 
-// Mostrar mensaje modal
 function mostrarMensaje(texto, color = "green") {
   mensaje.style.color = color;
   mensaje.textContent = texto;
@@ -70,12 +64,10 @@ function mostrarMensaje(texto, color = "green") {
   }, 3000);
 }
 
-// Cerrar mensaje modal
 function cerrarMensaje() {
   modalMensaje.style.display = "none";
 }
 
-// Función común para operaciones POST
 function realizarOperacion(tipo) {
   let body = {};
   let url = "";
@@ -83,14 +75,14 @@ function realizarOperacion(tipo) {
     const monto = parseFloat(document.getElementById("montoDeposito").value);
     if (isNaN(monto) || monto <= 0) return mostrarMensaje("Monto inválido", "red");
     body = { cuenta, monto };
-    url = "http://localhost:8083/deposito";
+    url = "https://transaction-service-499721146204.us-central1.run.app/deposito";
   }
 
   if (tipo === "retiro") {
     const monto = parseFloat(document.getElementById("montoRetiro").value);
     if (isNaN(monto) || monto <= 0) return mostrarMensaje("Monto inválido", "red");
     body = { cuenta, monto };
-    url = "http://localhost:8083/retiro";
+    url = "https://transaction-service-499721146204.us-central1.run.app/retiro";
   }
 
   if (tipo === "transferencia") {
@@ -103,7 +95,7 @@ function realizarOperacion(tipo) {
       cuentaDestino: destino,
       monto
     };
-    url = "http://localhost:8083/transferencia";
+    url = "https://transaction-service-499721146204.us-central1.run.app/transferencia";
   }
 
   fetch(url, {
@@ -116,9 +108,8 @@ function realizarOperacion(tipo) {
     .catch(() => mostrarMensaje("Error en la operación", "red"));
 }
 
-// Saldo con ventana modal
 function consultarSaldo() {
-  fetch(`http://localhost:8082/saldo?cuenta=${cuenta}`)
+  fetch(`https://account-service-499721146204.us-central1.run.app/saldo?cuenta=${cuenta}`)
     .then(res => res.text())
     .then(saldo => {
       contenidoModal.innerHTML = `
