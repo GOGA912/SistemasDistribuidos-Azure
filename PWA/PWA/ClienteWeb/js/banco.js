@@ -87,13 +87,13 @@ function realizarOperacion(tipo) {
     const monto = parseFloat(document.getElementById("montoDeposito").value);
     if (isNaN(monto) || monto <= 0) return mostrarMensaje("Monto inválido", "red");
     body = { cuenta, monto };
-    url = "http://130.131.81.210:8083/deposito";
+    url = "https://transaction-service-499721146204.us-central1.run.app/deposito";
   }
   if (tipo === "retiro") {
     const monto = parseFloat(document.getElementById("montoRetiro").value);
     if (isNaN(monto) || monto <= 0) return mostrarMensaje("Monto inválido", "red");
     body = { cuenta, monto };
-    url = "http://130.131.81.210:8083/retiro";
+    url = "https://transaction-service-499721146204.us-central1.run.app/retiro";
   }
   if (tipo === "transferencia") {
     const destino = document.getElementById("cuentaDestino").value;
@@ -105,7 +105,7 @@ function realizarOperacion(tipo) {
       cuentaDestino: destino,
       monto
     };
-    url = "http://130.131.81.210:8083/transferencia";
+    url = "https://transaction-service-499721146204.us-central1.run.app/transferencia";
   }
   fetch(url, {
     method: "POST",
@@ -119,7 +119,7 @@ function realizarOperacion(tipo) {
 
 // Saldo con ventana modal
 function consultarSaldo() {
-  fetch(`http://130.131.81.210:8082/saldo?cuenta=${cuenta}`)
+  fetch(`https://account-service-499721146204.us-central1.run.app/saldo?cuenta=${cuenta}`)
     .then(res => res.text())
     .then(saldo => {
       contenidoModal.innerHTML = `
@@ -133,7 +133,7 @@ function consultarSaldo() {
 
 //Movimientos con ventana modal
 function consultarMovimientos() {
-  fetch(`http://130.131.81.210:8085/movimientos?cuenta=${cuenta}`)
+  fetch(`https://movementes-service-499721146204.us-central1.run.app/movimientos?cuenta=${cuenta}`)
     .then(res => res.json())
     .then(data => {
       let html = `
