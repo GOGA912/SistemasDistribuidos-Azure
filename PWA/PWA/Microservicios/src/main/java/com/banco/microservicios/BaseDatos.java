@@ -123,7 +123,6 @@ public class BaseDatos {
         } catch (SQLException e) {
             System.out.println("Error al consultar movimientos: " + e.getMessage());
         }
-
         return lista;
     }
 

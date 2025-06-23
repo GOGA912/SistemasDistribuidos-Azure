@@ -35,7 +35,7 @@ public class BaseDatos {
         String sqlID = "SELECT titular_id FROM \"Cuentas\" WHERE numero = ?";
         String sqlNombre = "SELECT nombre, sexo FROM \"Clientes\" WHERE id = ?";
         try (Connection conn = conectar();
-             PreparedStatement stmt1 = conn.prepareStatement(sqlID)) {
+            PreparedStatement stmt1 = conn.prepareStatement(sqlID)) {
             stmt1.setString(1, cuenta);
             ResultSet rs1 = stmt1.executeQuery();
             if (rs1.next()) {
@@ -60,7 +60,7 @@ public class BaseDatos {
     public static double consultarSaldo(String cuenta) {
         String sql = "SELECT saldo FROM \"Cuentas\" WHERE numero = ?";
         try (Connection conn = conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cuenta);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -77,7 +77,7 @@ public class BaseDatos {
     public static boolean actualizarSaldo(String cuenta, double nuevoSaldo) {
         String sql = "UPDATE \"Cuentas\" SET saldo = ? WHERE numero = ?";
         try (Connection conn = conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setDouble(1, nuevoSaldo);
             stmt.setString(2, cuenta);
             int filas = stmt.executeUpdate();
@@ -89,7 +89,7 @@ public class BaseDatos {
     }
     
     public static void registrarMovimiento(String cuenta, String tipo, double monto) {
-        String sql = "INSERT INTO \"Movimientos\" (cuenta, tipo, monto, fecha) VALUES (?, ?, ?, now())";
+        String sql = "INSERT INTO \"Movimientos\" (cuenta, tipo, monto, fecha) VALUES (?, ?, ?, datetime('now'))";
         try (Connection conn = conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cuenta);
@@ -104,7 +104,7 @@ public class BaseDatos {
     public static void registrarTransferencia(String origen, String destino, double monto) {
         String sql = "INSERT INTO \"Transferencias\" (cuenta_origen, cuenta_destino, monto, fecha) VALUES (?, ?, ?, now())";
         try (Connection conn = conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, origen);
             stmt.setString(2, destino);
             stmt.setDouble(3, monto);
@@ -118,7 +118,7 @@ public class BaseDatos {
         List<Map<String, String>> lista = new ArrayList<>();
         String sql = "SELECT tipo, monto, fecha FROM \"Movimientos\" WHERE cuenta = ? ORDER BY fecha DESC LIMIT 10";
         try (Connection conn = conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cuenta);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

@@ -22,24 +22,20 @@ public class OperacionHandler implements HttpHandler {
         exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
         exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type");
         exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "POST, OPTIONS");
-
         if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
-            exchange.sendResponseHeaders(204, -1); // No Content
+            exchange.sendResponseHeaders(204, -1);
             return;
         }
-
         if (!"POST".equalsIgnoreCase(exchange.getRequestMethod())) {
-            exchange.sendResponseHeaders(405, -1); // Método no permitido
+            exchange.sendResponseHeaders(405, -1);
             return;
         }
-
         BufferedReader br = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
         StringBuilder body = new StringBuilder();
         String linea;
         while ((linea = br.readLine()) != null) {
             body.append(linea);
         }
-
         if (tipoOperacion.equals("transferencia")) {
             TransferenciaDTO dto = gson.fromJson(body.toString(), TransferenciaDTO.class);
             procesarTransferencia(exchange, dto);
@@ -57,14 +53,11 @@ public class OperacionHandler implements HttpHandler {
     private void procesarDeposito(HttpExchange exchange, OperacionDTO dto) throws IOException {
         System.out.println(">> Cuenta: " + dto.getCuenta());
         System.out.println(">> Monto recibido: " + dto.getMonto());
-
-        
         double saldoActual = consultarSaldo(dto.getCuenta());
         if (saldoActual < 0) {
             enviarRespuesta(exchange, 404, "Cuenta no encontrada en deposito");
             return;
         }
-
         double nuevoSaldo = saldoActual + dto.getMonto();
         if (actualizarSaldo(dto.getCuenta(), nuevoSaldo)) {
             BaseDatos.registrarMovimiento(dto.getCuenta(), "deposito", dto.getMonto());
@@ -79,19 +72,16 @@ public class OperacionHandler implements HttpHandler {
             enviarRespuesta(exchange, 423, "La cuenta está en uso. Intente más tarde.");
             return;
         }
-
         try {
             double saldoActual = consultarSaldo(dto.getCuenta());
             if (saldoActual < 0) {
                 enviarRespuesta(exchange, 404, "Cuenta no encontrada");
                 return;
             }
-
             if (dto.getMonto() > saldoActual) {
                 enviarRespuesta(exchange, 400, "Saldo insuficiente");
                 return;
             }
-
             double nuevoSaldo = saldoActual - dto.getMonto();
             if (actualizarSaldo(dto.getCuenta(), nuevoSaldo)) {
                 BaseDatos.registrarMovimiento(dto.getCuenta(), "retiro", dto.getMonto());
@@ -133,11 +123,9 @@ public class OperacionHandler implements HttpHandler {
             double nuevoDestino = saldoDestino + dto.getMonto();
             if (actualizarSaldo(dto.getCuentaOrigen(), nuevoOrigen) &&
                 actualizarSaldo(dto.getCuentaDestino(), nuevoDestino)) {
-
                 BaseDatos.registrarMovimiento(dto.getCuentaOrigen(), "transferencia", dto.getMonto());
                 BaseDatos.registrarTransferencia(dto.getCuentaOrigen(), dto.getCuentaDestino(), dto.getMonto());
-
-                enviarRespuesta(exchange, 200, "Transferencia exitosa");
+                enviarRespuesta(exchange, 200, "Transferencia exitosa. Nuevo saldo: $" + nuevoOrigen);
             } else {
                 enviarRespuesta(exchange, 500, "Error al actualizar los saldos");
             }
@@ -147,14 +135,11 @@ public class OperacionHandler implements HttpHandler {
         }
     }
 
-
-
     private double consultarSaldo(String cuenta) {
         try {
             URL url = new URL("https://account-service-499721146204.us-central1.run.app/saldo?cuenta=" + cuenta);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
-
             if (conn.getResponseCode() == 200) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 return Double.parseDouble(in.readLine());
@@ -172,19 +157,15 @@ public class OperacionHandler implements HttpHandler {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
-
             String json = gson.toJson(new ActualizarSaldoDTO(cuenta, nuevoSaldo));
             OutputStream os = conn.getOutputStream();
             os.write(json.getBytes());
             os.flush();
             os.close();
-
             System.out.println(">> Actualizando saldo en cuenta: " + cuenta);
             System.out.println(">> Nuevo saldo en BD: " + nuevoSaldo);
             System.out.println(">> Código de respuesta: " + conn.getResponseCode());
-
             return conn.getResponseCode() == 200;
-
         } catch (Exception e) {
             System.out.println("Error al actualizar saldo: " + e.getMessage());
             return false;
@@ -202,7 +183,6 @@ public class OperacionHandler implements HttpHandler {
     
     private boolean solicitarAcceso(String cuenta) {
         System.out.println("⚠️ LLAMANDO A solicitarAcceso PARA: " + cuenta);
-
         try {
             for (int i = 0; i < 3; i++) {
                 URL url = new URL("https://concurrency-service-499721146204.us-central1.run.app/acceso");
@@ -210,19 +190,16 @@ public class OperacionHandler implements HttpHandler {
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
-
                 String json = gson.toJson(new OperacionDTO(cuenta, 0)); // solo usamos el campo cuenta
                 try (OutputStream os = conn.getOutputStream()) {
                     os.write(json.getBytes());
                     os.flush();
                 }
-
                 int code = conn.getResponseCode();
                 if (code == 200) {
                     return true;
                 }
-
-                Thread.sleep(500); // espera antes de reintentar
+                Thread.sleep(500);
             }
         } catch (Exception e) {
             System.out.println("Error al solicitar acceso de concurrencia: " + e.getMessage());
@@ -232,23 +209,19 @@ public class OperacionHandler implements HttpHandler {
 
     private void liberarAcceso(String cuenta) {
         System.out.println("⚠️ LLAMANDO A liberarAcceso PARA: " + cuenta);
-
         try {
             URL url = new URL("https://concurrency-service-499721146204.us-central1.run.app/liberar");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setDoOutput(true);
-
             String json = gson.toJson(new OperacionDTO(cuenta, 0));
             try (OutputStream os = conn.getOutputStream()) {
                 os.write(json.getBytes());
                 os.flush();
             }
-
             System.out.println(">> Se envió liberación para cuenta: " + cuenta);
             System.out.println(">> Código respuesta liberar: " + conn.getResponseCode());
-
         } catch (Exception e) {
             System.out.println("❌ Error al liberar acceso de concurrencia: " + e.getMessage());
         }
