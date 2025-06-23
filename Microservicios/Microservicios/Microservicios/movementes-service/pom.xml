@@ -66,4 +66,5 @@
       </plugin>
     </plugins>
   </build>
+    <name>movements-service</name>
 </project>
