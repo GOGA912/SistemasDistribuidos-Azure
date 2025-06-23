@@ -89,7 +89,7 @@ public class BaseDatos {
     }
     
     public static void registrarMovimiento(String cuenta, String tipo, double monto) {
-        String sql = "INSERT INTO \"Movimientos\" (cuenta, tipo, monto, fecha) VALUES (?, ?, ?, now())";
+        String sql = "INSERT INTO \"Movimientos\" (cuenta, tipo, monto, fecha) VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
         try (Connection conn = conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cuenta);

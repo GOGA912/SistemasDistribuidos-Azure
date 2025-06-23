@@ -89,7 +89,7 @@ public class BaseDatos {
     }
     
     public static void registrarMovimiento(String cuenta, String tipo, double monto) {
-        String sql = "INSERT INTO \"Movimientos\" (cuenta, tipo, monto, fecha) VALUES (?, ?, ?, datetime('now'))";
+        String sql = "INSERT INTO \"Movimientos\" (cuenta, tipo, monto, fecha) VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
         try (Connection conn = conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cuenta);
@@ -100,6 +100,7 @@ public class BaseDatos {
             System.out.println("Error al registrar movimiento: " + e.getMessage());
         }
     }
+
 
     public static void registrarTransferencia(String origen, String destino, double monto) {
         String sql = "INSERT INTO \"Transferencias\" (cuenta_origen, cuenta_destino, monto, fecha) VALUES (?, ?, ?, now())";
