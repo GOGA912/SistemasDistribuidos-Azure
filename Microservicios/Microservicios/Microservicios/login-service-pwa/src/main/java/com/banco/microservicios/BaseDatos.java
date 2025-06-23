@@ -2,6 +2,8 @@ package com.banco.microservicios;
 
 import com.banco.microservicios.loginService.Titular;
 import java.sql.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,25 +91,41 @@ public class BaseDatos {
     }
     
     public static void registrarMovimiento(String cuenta, String tipo, double monto) {
-        String sql = "INSERT INTO \"Movimientos\" (cuenta, tipo, monto, fecha) VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
+        String sql = "INSERT INTO \"Movimientos\" (cuenta, tipo, monto, fecha) VALUES (?, ?, ?, ?)";
         try (Connection conn = conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, cuenta);
             stmt.setString(2, tipo);
             stmt.setDouble(3, monto);
+
+            // Obtener la fecha y hora en zona horaria de Ciudad de México
+            ZonedDateTime zonaCDMX = ZonedDateTime.now(ZoneId.of("America/Mexico_City"));
+            Timestamp fechaCDMX = Timestamp.valueOf(zonaCDMX.toLocalDateTime());
+
+            stmt.setTimestamp(4, fechaCDMX);
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al registrar movimiento: " + e.getMessage());
         }
     }
-
+    
     public static void registrarTransferencia(String origen, String destino, double monto) {
-        String sql = "INSERT INTO \"Transferencias\" (cuenta_origen, cuenta_destino, monto, fecha) VALUES (?, ?, ?, now())";
+        String sql = "INSERT INTO transferencias (cuenta_origen, cuenta_destino, monto, fecha) VALUES (?, ?, ?, ?)";
         try (Connection conn = conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, origen);
             stmt.setString(2, destino);
             stmt.setDouble(3, monto);
+
+            // Obtener hora de Ciudad de México
+            ZonedDateTime zonaCDMX = ZonedDateTime.now(ZoneId.of("America/Mexico_City"));
+            Timestamp fechaCDMX = Timestamp.valueOf(zonaCDMX.toLocalDateTime());
+
+            stmt.setTimestamp(4, fechaCDMX);
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error al registrar transferencia: " + e.getMessage());
