@@ -2,8 +2,10 @@ package com.banco.microservicios;
 
 import com.banco.microservicios.concurrencyService.Titular;
 import java.sql.*;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -143,9 +145,12 @@ public class BaseDatos {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Map<String, String> movimiento = new HashMap<>();
+                OffsetDateTime fechaUTC = rs.getObject("fecha", OffsetDateTime.class);
+                String fechaFormateada = fechaUTC.atZoneSameInstant(ZoneId.of("America/Mexico_City"))
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 movimiento.put("tipo", rs.getString("tipo"));
                 movimiento.put("monto", String.valueOf(rs.getDouble("monto")));
-                movimiento.put("fecha", rs.getString("fecha"));
+                movimiento.put("fecha", fechaFormateada);
                 lista.add(movimiento);
             }
         } catch (SQLException e) {
