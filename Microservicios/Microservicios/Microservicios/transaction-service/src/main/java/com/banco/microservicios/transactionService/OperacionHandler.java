@@ -60,7 +60,7 @@ public class OperacionHandler implements HttpHandler {
         }
         double nuevoSaldo = saldoActual + dto.getMonto();
         if (actualizarSaldo(dto.getCuenta(), nuevoSaldo)) {
-            BaseDatos.registrarMovimiento(dto.getCuenta(), "deposito", dto.getMonto());
+            BaseDatos.registrarMovimiento(dto.getCuenta(), "Deposito", dto.getMonto());
             enviarRespuesta(exchange, 200, "Depósito exitoso. Nuevo saldo: $" + nuevoSaldo);
         } else {
             enviarRespuesta(exchange, 500, "Error al actualizar saldo");
@@ -84,7 +84,7 @@ public class OperacionHandler implements HttpHandler {
             }
             double nuevoSaldo = saldoActual - dto.getMonto();
             if (actualizarSaldo(dto.getCuenta(), nuevoSaldo)) {
-                BaseDatos.registrarMovimiento(dto.getCuenta(), "retiro", dto.getMonto());
+                BaseDatos.registrarMovimiento(dto.getCuenta(), "Retiro", dto.getMonto());
                 enviarRespuesta(exchange, 200, "Retiro exitoso. Nuevo saldo: $" + nuevoSaldo);
             } else {
                 enviarRespuesta(exchange, 500, "Error al actualizar saldo");
@@ -123,7 +123,7 @@ public class OperacionHandler implements HttpHandler {
             double nuevoDestino = saldoDestino + dto.getMonto();
             if (actualizarSaldo(dto.getCuentaOrigen(), nuevoOrigen) &&
                 actualizarSaldo(dto.getCuentaDestino(), nuevoDestino)) {
-                BaseDatos.registrarMovimiento(dto.getCuentaOrigen(), "transferencia", dto.getMonto());
+                BaseDatos.registrarMovimiento(dto.getCuentaOrigen(), "Transferencia", dto.getMonto());
                 BaseDatos.registrarTransferencia(dto.getCuentaOrigen(), dto.getCuentaDestino(), dto.getMonto());
                 enviarRespuesta(exchange, 200, "Transferencia exitosa. Nuevo saldo: $" + nuevoOrigen);
             } else {
