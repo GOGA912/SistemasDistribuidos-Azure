@@ -7,12 +7,18 @@ import java.util.List;
 import java.util.Map;
 
 public class BaseDatos {
-    private static final String BD = "jdbc:sqlite:Banco.db"; 
+    private static final String BD = "jdbc:postgresql://34.46.69.214:5432/banco";
+    private static final String USUARIO = "postgres";
+    private static final String PASSWORD = "sistemasdistribuidos";
+
+    private static Connection conectar() throws SQLException {
+        return DriverManager.getConnection(BD, USUARIO, PASSWORD);
+    }
 
 
     public static boolean validarCuenta(String numero, int nip) {
-        String sql = "SELECT * FROM cuentas WHERE numero = ? AND nip = ?";
-        try (Connection conn = DriverManager.getConnection(BD);
+        String sql = "SELECT * FROM \"Cuentas\" WHERE numero = ? AND nip = ?";
+        try (Connection conn = conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, numero);
             stmt.setInt(2, nip);
@@ -25,10 +31,10 @@ public class BaseDatos {
     }
     
     public static Titular consultarNombreSexo(String cuenta) {
-        String sqlID = "SELECT titular_id FROM Cuentas WHERE numero = ?";
-        String sqlNombre = "SELECT nombre,sexo FROM Clientes WHERE id = ?";
-        try (Connection conn = DriverManager.getConnection(BD);
-            PreparedStatement stmt1 = conn.prepareStatement(sqlID)) {
+        String sqlID = "SELECT titular_id FROM \"Cuentas\" WHERE numero = ?";
+        String sqlNombre = "SELECT nombre, sexo FROM \"Clientes\" WHERE id = ?";
+        try (Connection conn = conectar();
+             PreparedStatement stmt1 = conn.prepareStatement(sqlID)) {
             stmt1.setString(1, cuenta);
             ResultSet rs1 = stmt1.executeQuery();
             if (rs1.next()) {
@@ -49,16 +55,17 @@ public class BaseDatos {
         return null;
     }
 
+
     public static double consultarSaldo(String cuenta) {
-        String sql = "SELECT saldo FROM Cuentas WHERE numero = ?";
-        try (Connection conn = DriverManager.getConnection(BD);
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String sql = "SELECT saldo FROM \"Cuentas\" WHERE numero = ?";
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cuenta);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getDouble("saldo");
             } else {
-                return -1; // Cuenta no encontrada
+                return -1;
             }
         } catch (SQLException e) {
             System.out.println("Error al consultar saldo: " + e.getMessage());
@@ -67,13 +74,13 @@ public class BaseDatos {
     }
 
     public static boolean actualizarSaldo(String cuenta, double nuevoSaldo) {
-        String sql = "UPDATE Cuentas SET saldo = ? WHERE numero = ?";
-        try (Connection conn = DriverManager.getConnection(BD);
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String sql = "UPDATE \"Cuentas\" SET saldo = ? WHERE numero = ?";
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setDouble(1, nuevoSaldo);
             stmt.setString(2, cuenta);
-            int filasAfectadas = stmt.executeUpdate();
-            return filasAfectadas > 0;
+            int filas = stmt.executeUpdate();
+            return filas > 0;
         } catch (SQLException e) {
             System.out.println("Error al actualizar saldo: " + e.getMessage());
             return false;
@@ -81,9 +88,9 @@ public class BaseDatos {
     }
     
     public static void registrarMovimiento(String cuenta, String tipo, double monto) {
-        String sql = "INSERT INTO Movimientos (cuenta, tipo, monto, fecha) VALUES (?, ?, ?, datetime('now'))";
-        try (Connection conn = DriverManager.getConnection(BD);
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String sql = "INSERT INTO movimientos (cuenta, tipo, monto, fecha) VALUES (?, ?, ?, now())";
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cuenta);
             stmt.setString(2, tipo);
             stmt.setDouble(3, monto);
@@ -94,9 +101,9 @@ public class BaseDatos {
     }
 
     public static void registrarTransferencia(String origen, String destino, double monto) {
-        String sql = "INSERT INTO Transferencias (cuenta_origen, cuenta_destino, monto, fecha) VALUES (?, ?, ?, datetime('now'))";
-        try (Connection conn = DriverManager.getConnection(BD);
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String sql = "INSERT INTO transferencias (cuenta_origen, cuenta_destino, monto, fecha) VALUES (?, ?, ?, now())";
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, origen);
             stmt.setString(2, destino);
             stmt.setDouble(3, monto);
@@ -108,9 +115,9 @@ public class BaseDatos {
     
     public static List<Map<String, String>> consultarMovimientos(String cuenta) {
         List<Map<String, String>> lista = new ArrayList<>();
-        String sql = "SELECT tipo, monto, fecha FROM Movimientos WHERE cuenta = ? ORDER BY fecha DESC LIMIT 10";
-        try (Connection conn = DriverManager.getConnection(BD);
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String sql = "SELECT tipo, monto, fecha FROM \"Movimientos\" WHERE cuenta = ? ORDER BY fecha DESC LIMIT 10";
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cuenta);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -123,8 +130,8 @@ public class BaseDatos {
         } catch (SQLException e) {
             System.out.println("Error al consultar movimientos: " + e.getMessage());
         }
-
         return lista;
     }
+
 
 }
