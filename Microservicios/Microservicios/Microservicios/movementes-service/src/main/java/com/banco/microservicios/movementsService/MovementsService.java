@@ -11,7 +11,7 @@ public class MovementsService {
             server.createContext("/movimientos", new MovimientosHandler());
             server.setExecutor(null); 
             server.start();
-            System.out.println("MovementsServices iniciado en http://localhost:8085/movimientos");
+            System.out.println("MovementsServices iniciado en http://localhost:"+port+"/movimientos");
         } catch (Exception e) {
             System.out.println("Error al iniciar AccountService: " + e.getMessage());
         }
