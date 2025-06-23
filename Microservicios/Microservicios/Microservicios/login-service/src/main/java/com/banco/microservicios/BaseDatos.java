@@ -100,8 +100,9 @@ public class BaseDatos {
             stmt.setDouble(3, monto);
 
             // Obtener la fecha y hora en zona horaria de Ciudad de México
-            ZonedDateTime zonaCDMX = ZonedDateTime.now(ZoneId.of("America/Mexico_City"));
-            Timestamp fechaCDMX = Timestamp.valueOf(zonaCDMX.toLocalDateTime());
+            ZoneId zonaCDMX = ZoneId.of("America/Mexico_City");
+            ZonedDateTime ahoraCDMX = ZonedDateTime.now(zonaCDMX);
+            Timestamp fechaCDMX = Timestamp.from(ahoraCDMX.toInstant());
 
             stmt.setTimestamp(4, fechaCDMX);
 
@@ -121,8 +122,9 @@ public class BaseDatos {
             stmt.setDouble(3, monto);
 
             // Obtener hora de Ciudad de México
-            ZonedDateTime zonaCDMX = ZonedDateTime.now(ZoneId.of("America/Mexico_City"));
-            Timestamp fechaCDMX = Timestamp.valueOf(zonaCDMX.toLocalDateTime());
+            ZoneId zonaCDMX = ZoneId.of("America/Mexico_City");
+            ZonedDateTime ahoraCDMX = ZonedDateTime.now(zonaCDMX);
+            Timestamp fechaCDMX = Timestamp.from(ahoraCDMX.toInstant());
 
             stmt.setTimestamp(4, fechaCDMX);
 
