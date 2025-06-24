@@ -3,7 +3,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   const cuenta = document.getElementById("cuenta").value;
   const nip = parseInt(document.getElementById("nip").value);
   const mensaje = document.getElementById("mensaje");
-  fetch("https://login-service-pwa-499721146204.us-central1.run.app/login", {
+  fetch("https://login-service-pwa-ceh8bacme8gjg0f2.centralus-01.azurewebsites.net/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ numero: cuenta, nip: nip })

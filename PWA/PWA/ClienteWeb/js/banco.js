@@ -87,13 +87,13 @@ function realizarOperacion(tipo) {
     const monto = parseFloat(document.getElementById("montoDeposito").value);
     if (isNaN(monto) || monto <= 0) return mostrarMensaje("Monto inválido", "red");
     body = { cuenta, monto };
-    url = "https://transaction-service-499721146204.us-central1.run.app/deposito";
+    url = "https://transaction-service-h8a9c6hzacejcrcc.centralus-01.azurewebsites.net/deposito";
   }
   if (tipo === "retiro") {
     const monto = parseFloat(document.getElementById("montoRetiro").value);
     if (isNaN(monto) || monto <= 0) return mostrarMensaje("Monto inválido", "red");
     body = { cuenta, monto };
-    url = "https://transaction-service-499721146204.us-central1.run.app/retiro";
+    url = "https://transaction-service-h8a9c6hzacejcrcc.centralus-01.azurewebsites.net/retiro";
   }
   if (tipo === "transferencia") {
     const destino = document.getElementById("cuentaDestino").value;
@@ -105,7 +105,7 @@ function realizarOperacion(tipo) {
       cuentaDestino: destino,
       monto
     };
-    url = "https://transaction-service-499721146204.us-central1.run.app/transferencia";
+    url = "https://transaction-service-h8a9c6hzacejcrcc.centralus-01.azurewebsites.net/transferencia";
   }
   fetch(url, {
     method: "POST",
@@ -119,7 +119,7 @@ function realizarOperacion(tipo) {
 
 // Saldo con ventana modal
 function consultarSaldo() {
-  fetch(`https://account-service-499721146204.us-central1.run.app/saldo?cuenta=${cuenta}`)
+  fetch(`https://account-service-dbcudhgph8fcheg8.centralus-01.azurewebsites.net/saldo?cuenta=${cuenta}`)
     .then(res => res.text())
     .then(saldo => {
       contenidoModal.innerHTML = `
@@ -133,7 +133,7 @@ function consultarSaldo() {
 
 //Movimientos con ventana modal
 function consultarMovimientos() {
-  fetch(`https://movementes-service-499721146204.us-central1.run.app/movimientos?cuenta=${cuenta}`)
+  fetch(`https://movements-service-hjhebhg9dqfpg0dk.centralus-01.azurewebsites.net/movimientos?cuenta=${cuenta}`)
     .then(res => res.json())
     .then(data => {
       let html = `
