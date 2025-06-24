@@ -1,16 +1,17 @@
 const CACHE_NAME = 'banco-pwa-cache-v1';
 const urlsToCache = [
   '/',
-  'https://https://green-sea-074ae4210.6.azurestaticapps.net/index.html',
-  'https://https://green-sea-074ae4210.6.azurestaticapps.net/html/dashboard.html',
-  'https://https://green-sea-074ae4210.6.azurestaticapps.net/css/estilo.css',
-  'https://https://green-sea-074ae4210.6.azurestaticapps.net/js/login.js',
-  'https://https://green-sea-074ae4210.6.azurestaticapps.net/js/banco.js',
-  'https://https://green-sea-074ae4210.6.azurestaticapps.net/pwa.js',
-  'https://https://green-sea-074ae4210.6.azurestaticapps.net/manifest.json',
-  'https://https://green-sea-074ae4210.6.azurestaticapps.net/icons/icon-192.png',
-  'https://https://green-sea-074ae4210.6.azurestaticapps.net/icons/icon-512.png'
+  'https://green-sea-074ae4210.6.azurestaticapps.net/index.html',
+  'https://green-sea-074ae4210.6.azurestaticapps.net/html/dashboard.html',
+  'https://green-sea-074ae4210.6.azurestaticapps.net/css/estilo.css',
+  'https://green-sea-074ae4210.6.azurestaticapps.net/js/login.js',
+  'https://green-sea-074ae4210.6.azurestaticapps.net/js/banco.js',
+  'https://green-sea-074ae4210.6.azurestaticapps.net/pwa.js',
+  'https://green-sea-074ae4210.6.azurestaticapps.net/manifest.json',
+  'https://green-sea-074ae4210.6.azurestaticapps.net/icons/icon-192.png',
+  'https://green-sea-074ae4210.6.azurestaticapps.net/icons/icon-512.png'
 ];
+
 self.addEventListener('install', (event) => {
   console.log('[Service Worker] Instalando...');
   event.waitUntil(
