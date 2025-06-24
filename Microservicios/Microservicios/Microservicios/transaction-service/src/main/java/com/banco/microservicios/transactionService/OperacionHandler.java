@@ -137,7 +137,7 @@ public class OperacionHandler implements HttpHandler {
 
     private double consultarSaldo(String cuenta) {
         try {
-            URL url = new URL("https://account-service-499721146204.us-central1.run.app/saldo?cuenta=" + cuenta);
+            URL url = new URL("https://account-service-dbcudhgph8fcheg8.centralus-01.azurewebsites.net/saldo?cuenta=" + cuenta);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             if (conn.getResponseCode() == 200) {
@@ -152,7 +152,7 @@ public class OperacionHandler implements HttpHandler {
 
     private boolean actualizarSaldo(String cuenta, double nuevoSaldo) {
         try {
-            URL url = new URL("https://account-service-499721146204.us-central1.run.app/saldo/actualizar");
+            URL url = new URL("https://account-service-dbcudhgph8fcheg8.centralus-01.azurewebsites.net/saldo/actualizar");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
@@ -185,7 +185,7 @@ public class OperacionHandler implements HttpHandler {
         System.out.println("⚠️ LLAMANDO A solicitarAcceso PARA: " + cuenta);
         try {
             for (int i = 0; i < 3; i++) {
-                URL url = new URL("https://concurrency-service-499721146204.us-central1.run.app/acceso");
+                URL url = new URL("https://concurrency-service-cabnfsa7cce9aub0.centralus-01.azurewebsites.net/acceso");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
@@ -210,7 +210,7 @@ public class OperacionHandler implements HttpHandler {
     private void liberarAcceso(String cuenta) {
         System.out.println("⚠️ LLAMANDO A liberarAcceso PARA: " + cuenta);
         try {
-            URL url = new URL("https://concurrency-service-499721146204.us-central1.run.app/liberar");
+            URL url = new URL("https://concurrency-service-cabnfsa7cce9aub0.centralus-01.azurewebsites.net/liberar");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");

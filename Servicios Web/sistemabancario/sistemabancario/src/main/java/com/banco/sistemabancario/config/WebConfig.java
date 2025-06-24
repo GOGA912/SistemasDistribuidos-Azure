@@ -19,7 +19,7 @@ public class WebConfig {
                             "https://tu-app.frontend.gcp.run.app",           // Cloud Run frontend (si lo usas)
                             "https://tu-dominio.web.app",                    // Firebase (si lo usas)
                             "https://storage.googleapis.com",                 // GCS bucket (frontend actual)
-                            "https://serviciosweb-back-cwfxbkfpgka6gefa.centralus-01.azurewebsites.net"
+                            "https://orange-stone-0df8deb10.2.azurestaticapps.net/"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")

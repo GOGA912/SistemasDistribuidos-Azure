@@ -5,7 +5,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   const nip = parseInt(document.getElementById("nip").value);
   const mensaje = document.getElementById("mensaje");
 
-  fetch("https://login-service-499721146204.us-central1.run.app/login", {
+  fetch("https://login-service-eyfxfjcjacg8c8hb.centralus-01.azurewebsites.net/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ numero: cuenta, nip: nip })
