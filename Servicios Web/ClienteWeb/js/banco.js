@@ -1,4 +1,4 @@
-const BASE_URL = "https://servidorwebdistribuido-499721146204.us-central1.run.app";
+const BASE_URL = "https://serviciosweb-back-cwfxbkfpgka6gefa.centralus-01.azurewebsites.net/";
 
 // Mostrar cuenta activa
 const cuenta = localStorage.getItem("cuentaActiva");

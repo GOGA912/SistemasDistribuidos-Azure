@@ -1,15 +1,15 @@
 const CACHE_NAME = 'banco-pwa-cache-v1';
 const urlsToCache = [
   '/',
-  '/index.html',
-  '/html/dashboard.html',
-  '/css/estilo.css',
-  '/js/login.js',
-  '/js/banco.js',
-  '/js/pwa.js',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png'
+  'https://storage.googleapis.com/pwa-front/ClienteWeb/index.html',
+  'https://storage.googleapis.com/pwa-front/ClienteWeb/html/dashboard.html',
+  'https://storage.googleapis.com/pwa-front/ClienteWeb/css/estilo.css',
+  'https://storage.googleapis.com/pwa-front/ClienteWeb/js/login.js',
+  'https://storage.googleapis.com/pwa-front/ClienteWeb/js/banco.js',
+  'https://storage.googleapis.com/pwa-front/ClienteWeb/pwa.js',
+  'https://storage.googleapis.com/pwa-front/ClienteWeb/manifest.json',
+  'https://storage.googleapis.com/pwa-front/ClienteWeb/icons/icon-192.png',
+  'https://storage.googleapis.com/pwa-front/ClienteWeb/icons/icon-512.png'
 ];
 self.addEventListener('install', (event) => {
   console.log('[Service Worker] Instalando...');

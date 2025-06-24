@@ -5,7 +5,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   const nip = parseInt(document.getElementById("nip").value);
   const mensaje = document.getElementById("mensaje");
 
-  const BASE_URL = "https://servidorwebdistribuido-499721146204.us-central1.run.app";
+  const BASE_URL = "https://serviciosweb-back-cwfxbkfpgka6gefa.centralus-01.azurewebsites.net/";
 
   fetch(`${BASE_URL}/auth/${cuenta}/${nip}`, {
     method: "GET",

@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 public class BaseDatos {
-    private static final String BD = "jdbc:postgresql://34.46.69.214:5432/banco";
+    private static final String BD = "jdbc:postgresql://banco-bd-sistemas-distribuidos.postgres.database.azure.com:5432/banco?sslmode=require";
     private static final String USUARIO = "postgres";
-    private static final String PASSWORD = "sistemasdistribuidos";
+    private static final String PASSWORD = "Banco2025";
 
     private static Connection conectar() throws SQLException {
         return DriverManager.getConnection(BD, USUARIO, PASSWORD);
@@ -77,6 +77,7 @@ public class BaseDatos {
             return -1;
         }
     }
+
 
     public static boolean actualizarSaldo(String cuenta, double nuevoSaldo) {
         String sql = "UPDATE \"Cuentas\" SET saldo = ? WHERE numero = ?";
